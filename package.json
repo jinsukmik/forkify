@@ -4,7 +4,9 @@
   "description": "recipe searching app",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/jinsukmik/forkify/issues"
   },
-  "homepage": "https://github.com/jinsukmik/forkify#readme"
+  "homepage": "https://github.com/jinsukmik/forkify#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  }
 }
