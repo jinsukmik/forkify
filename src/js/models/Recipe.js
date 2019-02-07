@@ -42,7 +42,9 @@ export default class Recipe {
         // need to put words with S first, so that it doesnt partially replace our unitsLong words
         const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
         const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
-        
+        //starts our array with the items inside of unitsShort
+        const units = [...unitsShort, 'kg', 'g']
+        // function that changes our strings to seperate
         const newIngredients = this.ingredients.map(el => {
             // uniform units of measurements
             let ingredient = el.toLowerCase();
@@ -55,8 +57,8 @@ export default class Recipe {
             // parse ingredients into count, unit and ingredient
             const arrIng = ingredient.split(' ');
             // find the index, where the unit is located, indexOf() doesnt work here b/c we dont know what unit were looking for
-            // includes - returns true if the element were passing is in the unitsShort array
-            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
+            // includes - returns true if the element were passing is in the units array
+            const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
             
             // if there is an unit
             let objIng;

@@ -7,7 +7,9 @@ export const elements = {
     searchResultsList: document.querySelector('.results__list'),
     // dom selector for results parent container
     searchResults: document.querySelector('.results'),
-    searchResultsPages: document.querySelector('.results__pages')
+    // dom selector for result pages 
+    searchResultsPages: document.querySelector('.results__pages'),
+    recipe: document.querySelector('.recipe')
 }
 
 export const elementStrings = {
