@@ -6,10 +6,11 @@ export const getInput = () => elements.searchInput.value;
 export const clearInput = () => {
     elements.searchInput.value = '';
 };
-//change the results area to empty
+//change the results area/button to empty
 export const clearResults = () => {
     elements.searchResultsList.innerHTML = '';
-}
+    elements.searchResultsPages.innerHTML ='';
+};
 // function to shorten recipe title, takes in the title name and a limit, which is at default 17
 // EXAMPLE of the iterations for split //
 // 'Pasta with tomato and spinach'//
@@ -28,15 +29,14 @@ export const limitRecipeTitle = (title, limit = 17) => {
                 // push the current word into the newTitle array
                 newTitle.push(cur);
             }
-            return acc + cur.length
+            return acc + cur.length;
         // start accumulator at 0
         },0);
-        // return the result
+        // join elements of an array into string, seperated by spaces and add ... to indicate that the title is longer  
         return `${newTitle.join(' ')} ...`;
-        }
-        return title;
+    }    
     //otherwise just return it
-    // join elements of an array into string, seperated by spaces and add ... to indicate that the title is longer  
+    return title;
 }
 
 /* another way to solve the same problem above
@@ -57,7 +57,7 @@ const renderRecipe = recipe => {
         <li>
             <a class="results__link" href="#${recipe.recipe_id}">
                 <figure class="results__fig">
-                    <img src="${recipe.image_url}" alt="Test">
+                    <img src="${recipe.image_url}" alt="${recipe.title}">
                 </figure>
                 <div class="results__data">
                     <h4 class="results__name">${limitRecipeTitle(recipe.title)}</h4>
@@ -67,9 +67,50 @@ const renderRecipe = recipe => {
         </li>`;
     elements.searchResultsList.insertAdjacentHTML('beforeend', markup); 
 };
+// render the next/previous buttons
+// ternary operator to make an if else statement.
+//if the type is prev make the arrow go left, otherwise right
+//if the type is prev than its page - 1. otherwise its page + 1
+const createButton = (page, type) => `
+    <button class="btn-inline results__btn--${type}" data-goto=${type === 'prev' ? page - 1 : page + 1}>
+        <span>Page ${type === 'prev' ? page -1 : page + 1}</span>
+        <svg class="search__icon">
+            <use href="img/icons.svg#icon-triangle-${type === 'prev' ? 'left' : 'right'}"></use>
+        </svg>
+    </button>
+`;
+            
+// render the page buttons, according to the number of the page that we are one
+const renderButtons = (page, numResults, resultsPerPages) => {
+    // Tells us that there are 3 pages because 30 / 10 = 3
+    // we math.ceil this number incase the API limit increases/decreases
+    const pages = Math.ceil(numResults / resultsPerPages);
+    // if this is the first page
+    let button;
+    if(page === 1 && pages > 1){
+        // only display button to go to next page
+        button = createButton(page, 'next');
+    }else if(page < pages) {
+        // display both previous and next page
+        button = `${createButton(page, 'next')}
+                ${createButton(page, 'prev')}
+                `;
+    }else if (page === pages && pages > 1){
+        // only display button to go to previous page
+        button = createButton(page, 'prev');
+    }
+    // insert buttons here
+    elements.searchResultsPages.insertAdjacentHTML('afterbegin', button);
+}
 
-
-//iterate through the array and return it
-export const renderResults = recipes => {
-    recipes.forEach(renderRecipe);
+//render results of current page
+export const renderResults = (recipes, page = 1, resultsPerPages = 10) => {
+    // 0 based index at which to begin extraction of data
+    const start = (page - 1) * resultsPerPages;
+    // 0 based index before which to end extraction of data
+    const end = page * resultsPerPages;
+    // runs the slice method for each of the rendered recipes
+    recipes.slice(start, end).forEach(renderRecipe);
+    //render pagination button
+    renderButtons(page, recipes.length, resultsPerPages);
 }

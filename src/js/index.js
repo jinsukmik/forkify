@@ -20,17 +20,38 @@ const controlSearch = async () => {
         searchView.clearInput();
         searchView.clearResults();
         renderLoader(elements.searchResults);
-        //search for recipes
-        await state.search.getResults();
-        //render results on UI
+        
+        try{
+            //search for recipes
+            await state.search.getResults();
+            //render results on UI
         clearLoader();
         searchView.renderResults(state.search.result);
+        }
+        catch(err){
+            alert('Something is wrong with the serach...');
+            clearLoader();
+        }
     }
 }
-
+// submit event
 elements.searchForm.addEventListener('submit', e => {
     // stops page from refreshing
     e.preventDefault();
     // run the search function
     controlSearch();
 })
+// click event we use e to have access to event
+elements.searchResultsPages.addEventListener('click', e => {
+    // grab the closest parent's class with btn-inline
+    const btn = e.target.closest('.btn-inline')
+    if(btn){
+        // select the element using data-goto attribute
+        // convert this string to an integer, base 10 = 0-9
+        const goToPage = parseInt(btn.dataset.goto, 10);
+        // clear the search view so it does not show double
+        searchView.clearResults();
+        // render results to search view with gotoPage buttons
+        searchView.renderResults(state.search.result, goToPage);
+    }
+});

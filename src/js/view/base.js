@@ -6,7 +6,8 @@ export const elements = {
     // dom selector for results area
     searchResultsList: document.querySelector('.results__list'),
     // dom selector for results parent container
-    searchResults: document.querySelector('.results')
+    searchResults: document.querySelector('.results'),
+    searchResultsPages: document.querySelector('.results__pages')
 }
 
 export const elementStrings = {
