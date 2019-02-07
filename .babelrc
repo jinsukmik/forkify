@@ -1,11 +1,17 @@
+// https://babeljs.io/docs/en/config-files#file-relative-configuration
 {
-    // collection of code transformed plugins
+    // collection of code transform plugins: pieces of code that apply the transformation to the code
     "presets": [
+        // babel-preset-env
         ["env", {
+            // targets these enviroments that we want to use
             "targets": {
+                // browsers we want to target
                 "browsers": [
-                    "last 5 versions",
-                    "ie >= 8"
+                    // last 5 versions of all the browsers
+                    "last 5 versions"
+                    // ie version greater than 8
+                    "ie >=8"
                 ]
             }
         }]
