@@ -8,7 +8,7 @@ import {elements} from './view/base';
 * - liked recipes
 */
 const state = {}
-
+// search controller
 const controlSearch = async () => {
     // get query from view
     const query = searchView.getInput();
@@ -16,8 +16,9 @@ const controlSearch = async () => {
     if(query){
         // new search object and add to state
         state.search = new Search(query);
-        //prepare UI for results
-
+        //prepare UI for results, by clearing it
+        searchView.clearInput();
+        searchView.clearResults();
         //search for recipes
         await state.search.getResults();
         //render results on UI

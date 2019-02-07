@@ -4156,7 +4156,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Search */ \"./src/js/models/Search.js\");\n\n/** global state \n* - search object\n* - current recipe object\n* - shopping list object\n* - liked recipes\n*/\nconst state = {}\n\nconst controlSearch = async () => {\n    // get query from view\n    const query = 'pizza' //TODO\n    if(query){\n        // new search object and add to state\n        state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__[\"default\"](query);\n        //prepare UI for results\n\n        //search for recipes\n        await state.search.getResults();\n        //render results on UI\n        console.log(state.search.recipes);\n    }\n}\n\ndocument.querySelector('.search').addEventListener('submit', e => {\n    // stops page from refreshing\n    e.preventDefault();\n    controlSearch();\n})\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _models_Search__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./models/Search */ \"./src/js/models/Search.js\");\n/* harmony import */ var _view_searchView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view/searchView */ \"./src/js/view/searchView.js\");\n/* harmony import */ var _view_base__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./view/base */ \"./src/js/view/base.js\");\n\n\n\n/** global state \n* - search object\n* - current recipe object\n* - shopping list object\n* - liked recipes\n*/\nconst state = {}\n\nconst controlSearch = async () => {\n    // get query from view\n    const query = _view_searchView__WEBPACK_IMPORTED_MODULE_1__[\"getInput\"]();\n    console.log(query);\n    if(query){\n        // new search object and add to state\n        state.search = new _models_Search__WEBPACK_IMPORTED_MODULE_0__[\"default\"](query);\n        //prepare UI for results\n\n        //search for recipes\n        await state.search.getResults();\n        //render results on UI\n        _view_searchView__WEBPACK_IMPORTED_MODULE_1__[\"renderResults\"](state.search.result);\n    }\n}\n\n_view_base__WEBPACK_IMPORTED_MODULE_2__[\"elements\"].searchForm.addEventListener('submit', e => {\n    // stops page from refreshing\n    e.preventDefault();\n    // run the search function\n    controlSearch();\n})\n\n\n//# sourceURL=webpack:///./src/js/index.js?");
 
 /***/ }),
 
@@ -4169,6 +4169,30 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mod
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Search; });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nclass Search {\n    // add properties we want the new properties to have\n    constructor(query){\n        this.query = query;\n    }\n    // async = this function returns a promise. it takes in results to add to our HTTP request\n    async getResults(){\n        // api key\n        const key = '04f7503812fffada5e6384429b55186d';\n        // this allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served\n        const cors = 'https://cors-anywhere.herokuapp.com/';\n        try{\n            // await this result(promise) AJAX call\n            const res = await axios__WEBPACK_IMPORTED_MODULE_0___default()(`${cors}https://food2fork.com/api/search?key=${key}&q=${this.query}`)\n            // result from the AJAX call\n             this.result = res.data.recipes;\n        }catch(error){\n            alert(error);\n        }\n    }\n}\n\n//# sourceURL=webpack:///./src/js/models/Search.js?");
+
+/***/ }),
+
+/***/ "./src/js/view/base.js":
+/*!*****************************!*\
+  !*** ./src/js/view/base.js ***!
+  \*****************************/
+/*! exports provided: elements */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"elements\", function() { return elements; });\nconst elements = {\n    // dom selector for search button\n    searchForm: document.querySelector('.search'),\n    // dom selector for search value\n    searchInput: document.querySelector('.search__field'),\n    // dom selector for results area\n    searchResultsList: document.querySelector('.results__list')\n}\n\n//# sourceURL=webpack:///./src/js/view/base.js?");
+
+/***/ }),
+
+/***/ "./src/js/view/searchView.js":
+/*!***********************************!*\
+  !*** ./src/js/view/searchView.js ***!
+  \***********************************/
+/*! exports provided: getInput, renderResults */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getInput\", function() { return getInput; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"renderResults\", function() { return renderResults; });\n/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ \"./src/js/view/base.js\");\n\nconst getInput = () => _base__WEBPACK_IMPORTED_MODULE_0__[\"elements\"].searchInput.value;\n// constructor for recipes incoming\nconst renderRecipe = recipe => {\n    const markup = `\n        <li>\n            <a class=\"results__link\" href=\"#${recipe.recipe_id}\">\n                <figure class=\"results__fig\">\n                    <img src=\"${recipe.image_url}\" alt=\"Test\">\n                </figure>\n                <div class=\"results__data\">\n                    <h4 class=\"results__name\">${recipe.title}</h4>\n                    <p class=\"results__author\">${recipe.publisher}</p>\n                </div>\n            </a>\n        </li>`\n};\n_base__WEBPACK_IMPORTED_MODULE_0__[\"elements\"].searchResultsList.insertAdjacentHTML('beforeend',markup);\n//iterate through the array and return it\nconst renderResults = recipes => {\n    recipes.forEach(el => renderRecipe(el))\n}\n\n//# sourceURL=webpack:///./src/js/view/searchView.js?");
 
 /***/ }),
 
