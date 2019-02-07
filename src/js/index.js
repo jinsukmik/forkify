@@ -26,11 +26,11 @@ const controlSearch = async () => {
             //search for recipes
             await state.search.getResults();
             //render results on UI
-        clearLoader();
-        searchView.renderResults(state.search.result);
+            clearLoader();
+            searchView.renderResults(state.search.result);
         }
         catch(err){
-            alert('Something is wrong with the serach...');
+            alert('Something is wrong with the search...');
             clearLoader();
         }
     }
@@ -41,7 +41,7 @@ elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     // run the search function
     controlSearch();
-})
+});
 // click event we use e to have access to event
 elements.searchResultsPages.addEventListener('click', e => {
     // grab the closest parent's class with btn-inline
@@ -58,6 +58,34 @@ elements.searchResultsPages.addEventListener('click', e => {
 });
 
 // RECIPE CONTROLLER
-const r = new Recipe(46956);
-r.getRecipe();
-console.log(r);
+const controlRecipe = async () => {
+    // get entire url -> just the hash (ID) -> REMOVE the hash with ''
+    const id = window.location.hash.replace('#','');
+    console.log(id);
+    if(id){
+        // prepare UI for changes
+
+        // create new recipe object
+        state.recipe = new Recipe(id);
+        try {
+            // get recipe data and parse ingredients
+            await state.recipe.getRecipe();
+            console.log(state.recipe.ingredients);
+            state.recipe.parseIngredients();
+            // calculate servings and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+            // render recipe
+            console.log(state.recipe)  
+        }
+        catch(err){
+            alert('Error processing recipe!');
+        }
+    }
+}
+// we needed this because if someone saves an URL with the hash, they wont be able to render anything
+// works when the hash is changed
+// window.addEventListener('hashchange', controlRecipe);
+// works when page is loaded
+// window.addEventListener('load', controlRecipe);
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));

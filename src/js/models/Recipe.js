@@ -38,5 +38,71 @@ export default class Recipe {
     calcServings(){
         this.servings = 4;
     }
+    parseIngredients(){
+        // need to put words with S first, so that it doesnt partially replace our unitsLong words
+        const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
+        const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+        
+        const newIngredients = this.ingredients.map(el => {
+            // uniform units of measurements
+            let ingredient = el.toLowerCase();
+            // if we find any of the unitsLong words, we replace it with the same positioned unitsShort abbreviation
+            unitsLong.forEach((unit, i) => {
+                ingredient = ingredient.replace(unit, unitsShort[i]);
+            });
+            // remove parentheses with regular expression, we replace parentheses with a space
+            ingredient = ingredient.replace(/ *\([^)]*\) */g, " ");
+            // parse ingredients into count, unit and ingredient
+            const arrIng = ingredient.split(' ');
+            // find the index, where the unit is located, indexOf() doesnt work here b/c we dont know what unit were looking for
+            // includes - returns true if the element were passing is in the unitsShort array
+            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
+            
+            // if there is an unit
+            let objIng;
+            if(unitIndex > -1){
+                // array ingredients, sliced from the beginning until the unitIndex excluding
+                //example: 4 1/2 cups = arrCount is [4,1/2]
+                const arrCount = arrIng.slice(0, unitIndex);
+                let count;
+                // if we have just 1 number ( no fractions after) count = arrIng[0]
+                if(arrCount.length === 1){
+                    count = eval(arrIng[0].replace('-', '+'));
+                }
+                // otherwise (ex: 4 1/2) combine those two strings
+                else{
+                    // make it so 4 1/2 = eval = 4.5
+                    count = eval(arrIng.slice(0, unitIndex).join('+'));
+                }
+                objIng = {
+                    //count = count
+                    count,
+                    unit: arrIng[unitIndex],
+                    // starts right after the unit
+                    ingredient: arrIng.slice(unitIndex + 1).join(' ')
+                };
+            }
+            //there is no unit but the first position is a number(example 1 packet of active dry yeast)
+            else if(parseInt(arrIng[0], 10)){
+                objIng = {
+                    count: parseInt(arrIng[0], 10),
+                    unit: '',
+                    // entire array except the first element
+                    ingredient: arrIng.slice(1).join(' ')
+                }
+            }
+            // there is no unit and no number in the first position
+            else if (unitIndex === -1){
+                objIng = {
+                    count: 1,
+                    unit: '',
+                    // ingredient: ingredient
+                    ingredient
+                }
+            }
+            return objIng;
+        });
+        this.ingredients = newIngredients;
+    }
 }
 
