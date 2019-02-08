@@ -103,8 +103,21 @@ export default class Recipe {
                 }
             }
             return objIng;
-        });
+        });        
         this.ingredients = newIngredients;
     }
+    // updates the servings, which in turn updates the amount of ingredients needed for the recipe
+    updateServings(type){
+        //Servings
+        // ternary operator: if its (dec)decreasing this.servings - 1, otherwise this.servings + 1
+        const newServings = type === 'dec' ? this.servings -1 : this.servings + 1;
+        //Ingredients
+        //ing: current value of foreach loop
+        this.ingredients.forEach(ing => {
+            ing.count = ing.count * (newServings / this.servings);
+        })
+
+        this.servings = newServings;
+    };
 }
 
