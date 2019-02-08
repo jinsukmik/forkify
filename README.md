@@ -1,7 +1,7 @@
 # forkify
-THANK YOU Jonas Schmedtmann of Udemy - I have learned a lot about state and ajax calls with promises!
+THANK YOU Jonas Schmedtmann of Udemy - I really liked going over everything line by line!
 
-If you plan on cloning this app. You will not be able to "npm run build" this file because of a terser having code breaking changes. Terser-webpack-plugin must use an older version 3.14.
+If you plan on cloning this app. You will not be able to "npm run build" this app because of a npm package: terser having code breaking changes. Terser-webpack-plugin must use an older version 3.14.
 
 OR
 
