@@ -14,7 +14,7 @@ export const clearResults = () => {
 // HIGHLIGHT SELECTED ITEMS //
 export const highlightSelected = id => {
     // grabs all the containers with the class results__link
-    const resultsArr = Array.from(document.querySelector('.results__link'))
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'))
     // iterate through this array
     resultsArr.forEach(el => {
         // remove the results__link--active class from all the results
