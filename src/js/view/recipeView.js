@@ -9,21 +9,22 @@ export const clearRecipe = () => {
 // FRACTIONAL npm package // - changes integers with decimals into fractions using their logic
 const formatCount = count => {
     if(count){
+        const newCount = Math.round(count * 10000) / 10000;
         // split count into an array the holds integer number and the decimal number. they are both strings so we need to convert to integers
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el,10));
+        const [int, dec] = newCount.toString().split('.').map(el => parseInt(el,10));
         // if no decimal, then just return the count
-        if(!dec) return count;
+        if(!dec) return newCount;
         // if theres no integer, but there is a decimal
         if(int === 0){
             // count = 2.5 --> 5/2 --> 2 1/2
             // cunt = 0.5 --> 1/2
-            const fr = new Fraction(count);
+            const fr = new Fraction(newCount);
             // returns as a fraction
             return `${fr.numerator}/${fr.denominator}`
         }
         else{
             // example - take 5/2 from above and return it like 2 1/2 
-            const fr = new Fraction(count - int);
+            const fr = new Fraction(newCount - int);
             return `${int} ${fr.numerator}/${fr.denominator}`
         }
     }

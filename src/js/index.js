@@ -18,7 +18,6 @@ const state = {}
 const controlSearch = async () => {
     // get query from view
     const query = searchView.getInput();
-    console.log(query);
     if(query){
         // new search object and add to state
         state.search = new Search(query);
@@ -65,7 +64,6 @@ elements.searchResultsPages.addEventListener('click', e => {
 const controlRecipe = async () => {
     // get entire url -> just the hash (ID) -> REMOVE the hash with ''
     const id = window.location.hash.replace('#','');
-    console.log(id);
     if(id){
         // prepare UI for changes
         recipeView.clearRecipe
@@ -192,7 +190,4 @@ elements.recipe.addEventListener('click', e => {
         // like controller
         controlLike();
     }
-})
-
-//test
-window.l = new List();
+});
