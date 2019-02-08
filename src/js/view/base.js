@@ -10,7 +10,10 @@ export const elements = {
     searchResults: document.querySelector('.results'),
     // dom selector for result pages 
     searchResultsPages: document.querySelector('.results__pages'),
-    recipe: document.querySelector('.recipe')
+    // dom selector for recipe
+    recipe: document.querySelector('.recipe'),
+    // dom selector for shopping list
+    shopping: document.querySelector('.shopping__list')
 }
 
 export const elementStrings = {
