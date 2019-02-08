@@ -13,7 +13,9 @@ export const elements = {
     // dom selector for recipe
     recipe: document.querySelector('.recipe'),
     // dom selector for shopping list
-    shopping: document.querySelector('.shopping__list')
+    shopping: document.querySelector('.shopping__list'),
+    likesMenu: document.querySelector('.likes__field'),
+    likesList: document.querySelector('.likes__lists')
 }
 
 export const elementStrings = {
