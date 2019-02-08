@@ -1,16 +1,14 @@
+// imported models // 
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+// imported views // 
 import * as searchView from './view/searchView'
 import * as recipeView from './view/recipeView'
+// imported functions and selectors //
 import {elements, renderLoader, clearLoader} from './view/base';
-/** global state 
-* - search object
-* - current recipe object
-* - shopping list object
-* - liked recipes
-*/
+// GLOBAL STATE - search object, current recipe object, shopping list object, liked recipes //
 const state = {}
-// SEARCH CONTROLLER
+// SEARCH CONTROLLER //
 const controlSearch = async () => {
     // get query from view
     const query = searchView.getInput();
@@ -36,14 +34,14 @@ const controlSearch = async () => {
         }
     }
 }
-// submit event
+// SUBMIT EVENT //
 elements.searchForm.addEventListener('submit', e => {
     // stops page from refreshing
     e.preventDefault();
     // run the search function
     controlSearch();
 });
-// click event we use e to have access to event
+// CLICK EVENT //
 elements.searchResultsPages.addEventListener('click', e => {
     // grab the closest parent's class with btn-inline
     const btn = e.target.closest('.btn-inline')
@@ -57,8 +55,7 @@ elements.searchResultsPages.addEventListener('click', e => {
         searchView.renderResults(state.search.result, goToPage);
     }
 });
-
-// RECIPE CONTROLLER
+// RECIPE CONTROLLER //
 const controlRecipe = async () => {
     // get entire url -> just the hash (ID) -> REMOVE the hash with ''
     const id = window.location.hash.replace('#','');
@@ -90,12 +87,11 @@ const controlRecipe = async () => {
     }
 }
 // we needed this because if someone saves an URL with the hash, they wont be able to render anything
-// works when the hash is changed
-// window.addEventListener('hashchange', controlRecipe);
-// works when page is loaded
-// window.addEventListener('load', controlRecipe);
+// window.addEventListener('hashchange', controlRecipe); - now works when the hash is changed
+// window.addEventListener('load', controlRecipe); - now works when page is loaded
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
-// handling recipe,like,increase,decrease button clicks
+
+// SERVING CONTROLLER //
 elements.recipe.addEventListener('click', e => {
     // btn-decrease, and ANY child of btn-decrease
     if(e.target.matches('.btn-decrease, .btn-decrease *')){

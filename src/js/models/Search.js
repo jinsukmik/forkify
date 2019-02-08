@@ -1,7 +1,8 @@
-// for the ajax call
+// NPM - for AJAX calls //
 import axios from 'axios';
-//api info
+// API info //
 import {key, cors} from '../config';
+// HANDLES AJAX SEARCH CALLS // - http = ...search?key...
 export default class Search {
     // add properties we want the new properties to have
     constructor(query){

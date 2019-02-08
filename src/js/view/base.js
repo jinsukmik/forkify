@@ -1,3 +1,4 @@
+// query selectors that we will import on other files //
 export const elements = {
     // dom selector for search button
     searchForm: document.querySelector('.search'),
@@ -15,8 +16,7 @@ export const elements = {
 export const elementStrings = {
     loader: 'loader'
 };
-// reuseable function for spinner
-// changed the class on our div
+// RENDER THE LOADER //
 export const renderLoader = parent => {
     const loader = `
         <div class="${elementStrings.loader}">
@@ -28,7 +28,7 @@ export const renderLoader = parent => {
     // where and what were attaching
     parent.insertAdjacentHTML('afterbegin', loader);
 }
-
+// CLEAR THE LOADER //
 export const clearLoader = () => {
     // class selector
     const loader = document.querySelector(`.${elementStrings.loader}`);

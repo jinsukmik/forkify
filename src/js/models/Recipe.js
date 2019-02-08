@@ -1,8 +1,8 @@
-// for the ajax call
+// NPM for AJAX calls //
 import axios from 'axios';
-//api info
+// api info //
 import {key, cors} from '../config';
-
+// HANDLES GET AJAX CALL // http = ...get?...
 export default class Recipe {
     // each recipe has an id, based on the id were going to make ajax calls for the recipe
     constructor(id){
@@ -25,19 +25,19 @@ export default class Recipe {
             alert('Something went wrong');
         }
     }
+    // CALCULATE ESTIMATED TIME TO CREATE RECIPE // - assuming that we need 15 minutes for each 3 ingredients
     calcTime(){
-    // assuming that we need 15 minutes for each 3 ingredients
     // number of ingredients
     const numIng = this.ingredients.length;
     // number of 15 minute periods that we have 
     const periods = Math.ceil(numIng / 3);
-
     this.time = periods * 15;
     }
     // Assume that all recipes are meant to serve 4 people
     calcServings(){
         this.servings = 4;
     }
+    // Make sure all our units of measurements are uniform
     parseIngredients(){
         // need to put words with S first, so that it doesnt partially replace our unitsLong words
         const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];

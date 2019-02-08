@@ -1,11 +1,12 @@
+// import //
 import {elements} from './base';
-// npm package that changes the decimals into fractions
+// npm package that changes the decimals into fractions //
 import {Fraction} from 'fractional';
-//clears the recipe container
+// clears the recipe container // 
 export const clearRecipe = () => {
     elements.recipe.innerHTML = '';
 }
-// 
+// FRACTIONAL npm package // - changes integers with decimals into fractions using their logic
 const formatCount = count => {
     if(count){
         // split count into an array the holds integer number and the decimal number. they are both strings so we need to convert to integers
@@ -29,7 +30,7 @@ const formatCount = count => {
     //it doesnt work and returns ?
     return '?';
 };
-//just returning a string
+// VIEW for ingredients //
 const createIngredient = ingredient => `
     <li class="recipe__item">
         <svg class="recipe__icon">
@@ -42,7 +43,7 @@ const createIngredient = ingredient => `
         </div>
     </li>
 `;
-// view for our recipe list
+// VIEW for our recipe list //
 export const renderRecipe = recipe => {
     const markup = `
         <figure class="recipe__fig">
@@ -116,7 +117,7 @@ export const renderRecipe = recipe => {
     `;
     elements.recipe.insertAdjacentHTML('afterbegin', markup);
 };
-
+// UPDATE SERVINGS OF INGREDIENTS// 
 export const updateServingsIngredients = recipe => {
     // update the servings
     document.querySelector('.recipe__info-data--people').textContent = recipe.servings;

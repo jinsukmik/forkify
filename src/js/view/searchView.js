@@ -1,17 +1,17 @@
-// import dom selectors from base.js
+// import dom selectors from base.js // 
 import {elements} from './base';
-// get the value of search input 
+// get the value of search input //
 export const getInput = () => elements.searchInput.value;
-// change the value of search input to empty
+// change the value of search input to empty //
 export const clearInput = () => {
     elements.searchInput.value = '';
 };
-//change the results area/button to empty
+//change the results area/button to empty //
 export const clearResults = () => {
     elements.searchResultsList.innerHTML = '';
     elements.searchResultsPages.innerHTML ='';
 };
-// selector for highlighted search items
+// HIGHLGIHT SELECTED ITEMS //
 export const highlightSelected = id => {
     // grabs all the containers with the class results__link
     const resultsArr = Array.from(document.querySelector('.results__link'))
@@ -23,13 +23,7 @@ export const highlightSelected = id => {
     // gives the links with the correct ID a class of results__link--active
     document.querySelector('a[href="#${id}"]').classList.add('results__link--active')
 }
-// function to shorten recipe title, takes in the title name and a limit, which is at default 17
-// EXAMPLE of the iterations for split //
-// 'Pasta with tomato and spinach'//
-// acc: 0 / acc + cur.length = 5 / newTitle = ['Pasta']
-// acc: 5 / acc + cur.length = 9 / newTitle = ['Pasta','with']
-// acc: 9 / acc + cur.length = 15 / newTitle = ['Pasta', 'with', 'tomato']
-// acc: 15 / acc + cur.length = 18 / newTitle = ['Pasta', 'with', 'tomato']
+// SHORTENS THE RECIPE TITLE //
 export const limitRecipeTitle = (title, limit = 17) => {
     const newTitle = [];
     //if the length of the title is greater than limit...
@@ -50,7 +44,7 @@ export const limitRecipeTitle = (title, limit = 17) => {
     //otherwise just return it
     return title;
 }
-
+// *EXTRA* //
 /* another way to solve the same problem above
 const limitRecipeTitle = (title, limit=21) => {
 	title = title.trim();
@@ -61,9 +55,10 @@ const limitRecipeTitle = (title, limit=21) => {
 	while (newTitle.length + words[0].length < limit - 4) newTitle += " " + words.shift();
 	return newTitle + " ...";
 */
+// *EXTRA* //
 
 
-// constructor for recipes incoming as well as running the title limiter on recipe.title
+// CONSTRUCTOR FOR RECIPES //
 const renderRecipe = recipe => {
     const markup = `
         <li>
@@ -80,6 +75,9 @@ const renderRecipe = recipe => {
     elements.searchResultsList.insertAdjacentHTML('beforeend', markup); 
 };
 // render the next/previous buttons
+
+
+// RENDERS NEXT/PREVIOUS BUTTONS //
 // ternary operator to make an if else statement.
 //if the type is prev make the arrow go left, otherwise right
 //if the type is prev than its page - 1. otherwise its page + 1
@@ -92,13 +90,15 @@ const createButton = (page, type) => `
     </button>
 `;
             
-// render the page buttons, according to the number of the page that we are one
+// RENDERS PAGE BUTTON // 
+// according to the number of the page that we are one
 const renderButtons = (page, numResults, resultsPerPages) => {
-    // Tells us that there are 3 pages because 30 / 10 = 3
+    // Tells us that there are 3 pages of data because 30 entries / 10 slots per page = 3 pages
     // we math.ceil this number incase the API limit increases/decreases
     const pages = Math.ceil(numResults / resultsPerPages);
+   
+    let button; 
     // if this is the first page
-    let button;
     if(page === 1 && pages > 1){
         // only display button to go to next page
         button = createButton(page, 'next');
@@ -115,7 +115,7 @@ const renderButtons = (page, numResults, resultsPerPages) => {
     elements.searchResultsPages.insertAdjacentHTML('afterbegin', button);
 }
 
-//render results of current page
+// RENDER RESULTS OF CURRENT PAGE //
 export const renderResults = (recipes, page = 1, resultsPerPages = 10) => {
     // 0 based index at which to begin extraction of data
     const start = (page - 1) * resultsPerPages;
