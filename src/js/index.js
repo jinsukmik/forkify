@@ -1,6 +1,7 @@
 // imported models // 
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 // imported views // 
 import * as searchView from './view/searchView'
 import * as recipeView from './view/recipeView'
@@ -72,7 +73,6 @@ const controlRecipe = async () => {
         try {
             // get recipe data and parse ingredients
             await state.recipe.getRecipe();
-            console.log(state.recipe.ingredients);
             state.recipe.parseIngredients();
             // calculate servings and time
             state.recipe.calcTime();
@@ -106,5 +106,7 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     }
-    console.log(state.recipe);
 })
+
+//test
+window.l = new List();
