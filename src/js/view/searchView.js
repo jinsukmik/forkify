@@ -11,6 +11,18 @@ export const clearResults = () => {
     elements.searchResultsList.innerHTML = '';
     elements.searchResultsPages.innerHTML ='';
 };
+// selector for highlighted search items
+export const highlightSelected = id => {
+    // grabs all the containers with the class results__link
+    const resultsArr = Array.from(document.querySelector('.results__link'))
+    // iterate through this array
+    resultsArr.forEach(el => {
+        // remove the results__link--active class from all the results
+        el.classList.remove('results__link--active');
+    })
+    // gives the links with the correct ID a class of results__link--active
+    document.querySelector('a[href="#${id}"]').classList.add('results__link--active')
+}
 // function to shorten recipe title, takes in the title name and a limit, which is at default 17
 // EXAMPLE of the iterations for split //
 // 'Pasta with tomato and spinach'//

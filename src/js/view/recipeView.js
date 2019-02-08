@@ -1,14 +1,41 @@
 import {elements} from './base';
+// npm package that changes the decimals into fractions
+import {Fraction} from 'fractional';
+//clears the recipe container
 export const clearRecipe = () => {
     elements.recipe.innerHTML = '';
 }
+// 
+const formatCount = count => {
+    if(count){
+        // split count into an array the holds integer number and the decimal number. they are both strings so we need to convert to integers
+        const [int, dec] = count.toString().split('.').map(el => parseInt(el,10));
+        // if no decimal, then just return the count
+        if(!dec) return count;
+        // if theres no integer, but there is a decimal
+        if(int === 0){
+            // count = 2.5 --> 5/2 --> 2 1/2
+            // cunt = 0.5 --> 1/2
+            const fr = new Fraction(count);
+            // returns as a fraction
+            return `${fr.numerator}/${fr.denominator}`
+        }
+        else{
+            // example - take 5/2 from above and return it like 2 1/2 
+            const fr = new Fraction(count - int);
+            return `${int} ${fr.numerator}/${fr.denominator}`
+        }
+    }
+    //it doesnt work and returns ?
+    return '?';
+};
 //just returning a string
 const createIngredient = ingredient => `
     <li class="recipe__item">
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingredient.count}</div>
+        <div class="recipe__count">${formatCount(ingredient.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredient.unit}</span>
             ${ingredient.ingredient}
