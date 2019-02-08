@@ -66,8 +66,8 @@ const controlRecipe = async () => {
     const id = window.location.hash.replace('#','');
     if(id){
         // prepare UI for changes
-        recipeView.clearRecipe
-        renderLoader(element.recipe)
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe)
         //highlight selected search item
         if (state.search) searchView.highlightSelected(id);
         
@@ -154,7 +154,7 @@ const controlLike = () => {
         // remove like to UI list
         likesView.deleteLike(currentID);
     }
-    likesView.toggleLikeMenu(state.likes.getNumLikes)
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
 }
 // RESTORING LIKED RECIPES ON PAGE LOAD - LOCAL STORAGE //
 window.addEventListener('load', () => {
@@ -178,6 +178,7 @@ elements.recipe.addEventListener('click', e => {
     } 
     // btn-increase, and ANY child of btn-increase
     else if (e.target.matches('.btn-increase, .btn-increase *')) {
+        // increase btn is clicked
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     }

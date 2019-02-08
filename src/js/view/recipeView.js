@@ -20,7 +20,7 @@ const formatCount = count => {
             // cunt = 0.5 --> 1/2
             const fr = new Fraction(newCount);
             // returns as a fraction
-            return `${fr.numerator}/${fr.denominator}`
+            return `${fr.numerator}/${fr.denominator}`;
         }
         else{
             // example - take 5/2 from above and return it like 2 1/2 
@@ -90,7 +90,7 @@ export const renderRecipe = (recipe, isLiked) => {
         
         <div class="recipe__ingredients">
             <ul class="recipe__ingredient-list">
-            ${recipe.ingredient.map(el => createIngredient(el)).join('')}
+            ${recipe.ingredients.map(el => createIngredient(el)).join('')}
             </ul>
 
             <button class="btn-small recipe__btn recipe__btn--add">
@@ -126,6 +126,6 @@ export const updateServingsIngredients = recipe => {
     const countElements = Array.from(document.querySelectorAll('.recipe__count'));
     // iterate through the array and change the text content
     countElements.forEach((el,i) => {
-        el.textContent = formatCount(recipe.ingredients[i]);
+        el.textContent = formatCount(recipe.ingredients[i].count);
     });
 }

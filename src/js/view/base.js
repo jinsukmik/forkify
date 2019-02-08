@@ -1,21 +1,14 @@
 // query selectors that we will import on other files //
 export const elements = {
-    // dom selector for search button
     searchForm: document.querySelector('.search'),
-    // dom selector for search value
     searchInput: document.querySelector('.search__field'),
-    // dom selector for results area
     searchResultsList: document.querySelector('.results__list'),
-    // dom selector for results parent container
     searchResults: document.querySelector('.results'),
-    // dom selector for result pages 
     searchResultsPages: document.querySelector('.results__pages'),
-    // dom selector for recipe
     recipe: document.querySelector('.recipe'),
-    // dom selector for shopping list
     shopping: document.querySelector('.shopping__list'),
     likesMenu: document.querySelector('.likes__field'),
-    likesList: document.querySelector('.likes__lists')
+    likesList: document.querySelector('.likes__list')
 }
 
 export const elementStrings = {

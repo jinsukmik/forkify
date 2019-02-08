@@ -11,7 +11,7 @@ export const clearResults = () => {
     elements.searchResultsList.innerHTML = '';
     elements.searchResultsPages.innerHTML ='';
 };
-// HIGHLGIHT SELECTED ITEMS //
+// HIGHLIGHT SELECTED ITEMS //
 export const highlightSelected = id => {
     // grabs all the containers with the class results__link
     const resultsArr = Array.from(document.querySelector('.results__link'))
@@ -21,7 +21,7 @@ export const highlightSelected = id => {
         el.classList.remove('results__link--active');
     })
     // gives the links with the correct ID a class of results__link--active
-    document.querySelector('.results__link[href="#${id}"]').classList.add('results__link--active')
+    document.querySelector(`.results__link[href*="#${id}"]`).classList.add('results__link--active')
 }
 // SHORTENS THE RECIPE TITLE //
 export const limitRecipeTitle = (title, limit = 17) => {
